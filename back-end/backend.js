@@ -24,9 +24,6 @@ function insertData(player,scorep,timep){
       }).then(() => db.close())
 }
 
-//console.log(id);
-//db.close();
-//mongodb+srv://michal:2cq6ciM6mCydUr@cluster0.ae4xe.azure.mongodb.net/sample_airbnb?retryWrites=true&w=majority
 app.get('/',(req, res) =>{
     console.log("request successful")
     res.json({

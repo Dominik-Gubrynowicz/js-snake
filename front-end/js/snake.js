@@ -1,10 +1,10 @@
 class Game {
-score;
-lost;
-InProgres;
+	score;
+	lost;
+	InProgres;
 }
 var canvas, ctx;
-window.onload = function() {
+window.onload = function () {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 
@@ -71,7 +71,8 @@ function draw() {
 			//czy wąż ugryzł swój ogon?
 			if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY) {
 				if (Game.InProgres == true) {
-					tailSize = endGame(tailSize);
+					endGame();
+					tailSize = defaultTailSize;
 				}
 			}
 		}
@@ -91,9 +92,14 @@ function randomCoords() {
 	appleX = Math.floor(Math.random() * gridSize);
 	appleY = Math.floor(Math.random() * gridSize);
 }
-function endGame(tailSize) {
+function endGame(tailSize, moves) {
 	Game.lost = true;
-	alert(tailSize);
-	insertIntoDB("kuba",30,4)	
-	return defaultTailSize;
+	//alert(tailSize);
+	//insertIntoDB("michal", tailSize - defaultTailSize, moves);
+	moves = 0;
+}
+function resetGame() {
+	snakeX = (snakeY = 10);
+	tailSize = defaultTailSize;
+	Game.lost = false;
 }

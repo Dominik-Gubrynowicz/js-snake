@@ -15,26 +15,21 @@ var corsOptionsProd = {
 
 const app = express();
 app.use(morgan('short'));
-app.use(cors(corsOptionsProd));
+//app.use(cors(corsOptionsProd));
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 
 
 
-function insertData(player,scorep,timep){
+function insertData(player,scorep,movep){
     const collection = db.get('ranking');
-    collection.insert([{nick: player,score: scorep, time: timep}])
+    collection.insert([{nick: player,score: scorep, moves: movep}])
       .then((docs) => {
       }).catch((err) => {
       }).then(() => db.close())
 }
 
-app.get('/',(req, res) =>{
-    console.log("request successful")
-    res.json({
-        message: 'vibe check'
-    });
-})
 app.get('/ranking',(req, res) =>{
     console.log("request successful")
     const collection = db.get('ranking');
@@ -54,10 +49,10 @@ app.post('/insertRanking',(req,res)=>{
     let nick = response["nick"];
     console.log(response["score"]);
     let score = response["score"];
-    console.log(response["time"]);
-    let time = response["time"];
+    console.log(response["move"]);
+    let move = response["move"];
     
-    insertData(nick,score,time);
+    insertData(nick,score,move);
     res.sendStatus(200);
 })
 app.listen(process.env.PORT, function(){

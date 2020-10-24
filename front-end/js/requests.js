@@ -19,7 +19,7 @@ function fetchRanking() {
     class dane {
         user;
     }
-    dane.user = `<table id="tabela">`;
+    dane.user = `<table id="tabela"><tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr>`;
     $.getJSON('http://localhost:3000/ranking', function (data) {
         console.log(data);
         data.forEach(element => {

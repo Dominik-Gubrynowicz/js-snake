@@ -2,7 +2,24 @@ class Game {
 	score;
 	lost;
 	InProgres;
+	moves;
+	tailSize;
+	defaultTailSize;
+	nick;
+	active;
 }
+
+function init(){
+	Game.nick = document.getElementById("nick-input").value;
+	setActive()
+}
+Game.active = false;
+function setActive(){
+	Game.active = true;
+	document.getElementById("canvas").setAttribute("style", "visibility: visible;");	
+	document.getElementById("id1").setAttribute("style", "visibility: hidden;");
+	document.getElementById("id1").setAttribute("style", "height: 0px;");
+}	
 var canvas, ctx;
 window.onload = function () {
 	canvas = document.getElementById('canvas');
@@ -22,8 +39,9 @@ var gridSize = (tileSize = 25);
 var nextX = (nextY = 0);
 
 /*Zmienne dotyczące węża*/
-var defaultTailSize = 8;
-var tailSize = defaultTailSize;
+var defaultTailSize = 3;
+Game.defaultTailSize = defaultTailSize;
+Game.tailSize = defaultTailSize;
 var snakeTrail = [];
 var snakeX = (snakeY = 10);
 
@@ -54,7 +72,7 @@ function draw() {
 
 		// czy wąż ugryzł jabłko?
 		if (snakeX == appleX && snakeY == appleY) {
-			tailSize++;
+			Game.tailSize++;
 			if (Game.InProgres == false) Game.InProgres = true;
 			randomCoords();
 		}
@@ -72,7 +90,7 @@ function draw() {
 			if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY) {
 				if (Game.InProgres == true) {
 					endGame();
-					tailSize = defaultTailSize;
+					Game.tailSize = defaultTailSize;
 				}
 			}
 		}
@@ -83,7 +101,7 @@ function draw() {
 
 		//ustawianie śladu węża
 		snakeTrail.push({ x: snakeX, y: snakeY });
-		while (snakeTrail.length > tailSize) {
+		while (snakeTrail.length > Game.tailSize) {
 			snakeTrail.shift();
 		}
 	}
@@ -92,14 +110,64 @@ function randomCoords() {
 	appleX = Math.floor(Math.random() * gridSize);
 	appleY = Math.floor(Math.random() * gridSize);
 }
-function endGame(tailSize, moves) {
+function endGame() {
 	Game.lost = true;
-	//alert(tailSize);
-	//insertIntoDB("michal", tailSize - defaultTailSize, moves);
-	moves = 0;
+	insertIntoDB(Game.nick, (Game.tailSize - Game.defaultTailSize), Game.moves);
+	document.getElementById("headline").innerText = "Przegrałeś, następna runda rozpocznie się za 5 sekund!"
+	Game.moves = 0;
+	resetGame();
 }
 function resetGame() {
 	snakeX = (snakeY = 10);
-	tailSize = defaultTailSize;
+	Game.tailSize = defaultTailSize;
 	Game.lost = false;
+	document.getElementById("headline").innerText = "Snake"	
+}
+var lastCode;
+Game.moves = 0;
+function keyDownEvent(e) {
+	if(Game.active == true){
+	switch (e.keyCode) {
+		case 37:
+			Game.InProgres = true;
+			if (lastCode == 39) { break; }
+			else {
+				Game.moves++;
+				lastCode = 37;
+				nextX = -1;
+				nextY = 0;
+				break;
+			}
+		case 38:
+			Game.InProgres = true;
+			if (lastCode == 40) break;
+			else {
+				Game.moves++;
+				lastCode = 38;
+				nextX = 0;
+				nextY = -1;
+				break;
+			}
+		case 39:
+			Game.InProgres = true;
+			if (lastCode == 37) break;
+			else {
+				Game.moves++;
+				lastCode = 39;
+				nextX = 1;
+				nextY = 0;
+				break;
+			}
+		case 40:
+			Game.InProgres = true;
+			if (lastCode == 38) break;
+			else {
+				Game.moves++;
+				lastCode = 40;
+				nextX = 0;
+				nextY = 1;
+				break;
+			}
+	}
+}
 }

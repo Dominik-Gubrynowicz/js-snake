@@ -6,7 +6,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <script src="js/input.js"></script>
   <script src="js/snake.js"></script>
   <script src="js/requests.js"></script>
   <link rel="stylesheet" href="style.css">
@@ -14,11 +13,18 @@
 </head>
 
 <body>
+  <h1 id="headline" style="font-size: 60px; text-align: center;">Snake</h1>
+  <div id="id1">
+
+  <h4>Wprowadz swój nick</h4>
+  <input id="nick-input" type="text">
+  <input id="przycisk" type="submit">
+  </div>
   <canvas id="canvas" width="625" height="625"></canvas>
-
-  <script>
-
-  </script>
+<script>
+  document.getElementById("przycisk").addEventListener("click",init);
+  document.getElementById("canvas").setAttribute("style", "visibility: hidden;");
+</script>
 </body>
 
 </html>

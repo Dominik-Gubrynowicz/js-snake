@@ -6,7 +6,7 @@
     font-size: 20px;
     width: 300px;
 }
-td,tr{
+th,td,tr{
     border-style: solid;
     border-width: 3px;
     color: black;
@@ -17,8 +17,6 @@ td,tr{
     display: flex;
     flex-direction: column;
     margin-left: calc(50vw - 150px);
-
-    
 }
 body{
     width: 100vw;
@@ -26,4 +24,8 @@ body{
 }
 #canvas{
     margin-left: calc(50vw - calc(625px / 2));
+}
+#id1{
+    text-align: center;
+
 }

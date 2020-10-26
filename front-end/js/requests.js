@@ -1,7 +1,6 @@
 function insertIntoDB(nick, score, moves) {
     (function ($) {
-        //var url = 'https://node-backend-snakemi16.herokuapp.com/insertRanking'
-        var url = 'http://localhost:3000/insertRanking'
+        var url = 'https://node-backend-snakemi16.herokuapp.com/insertRanking'
         $.ajax({
             url: url,
             type: 'POST',
@@ -20,7 +19,7 @@ function fetchRanking() {
         user;
     }
     dane.user = `<table id="tabela"><tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr>`;
-    $.getJSON('http://localhost:3000/ranking', function (data) {
+    $.getJSON('https://node-backend-snakemi16.herokuapp.com/ranking', function (data) {
         console.log(data);
         data.forEach(element => {
             //debug

@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const cors = require('cors');
 let pass = process.env.DB_PASS;
 let user = process.env.DB_USER;
-const db = require('monk')('mongodb+srv://'+user+':'+pass+'@cluster0.ae4xe.azure.mongodb.net/snake?retryWrites=true&w=majority')
+const db = require('monk')('mongodb+srv://' + user + ':' + pass + '@cluster0.ae4xe.azure.mongodb.net/snake?retryWrites=true&w=majority')
 
 var corsOptionsProd = {
     origin: 'http://snake.gutowski-dev.pl',
@@ -15,25 +15,24 @@ var corsOptionsProd = {
 
 const app = express();
 app.use(morgan('short'));
-//app.use(cors(corsOptionsProd));
-app.use(cors());
+app.use(cors(corsOptionsProd));
 app.use(express.json());
 app.use(helmet());
 
 
 
-function insertData(player,scorep,movep){
+function insertData(player, scorep, movep) {
     const collection = db.get('ranking');
-    collection.insert([{nick: player,score: scorep, moves: movep}])
-      .then((docs) => {
-      }).catch((err) => {
-      }).then(() => db.close())
+    collection.insert([{ nick: player, score: scorep, moves: movep }])
+        .then((docs) => {
+        }).catch((err) => {
+        }).then(() => db.close())
 }
 
-app.get('/ranking',(req, res) =>{
+app.get('/ranking', (req, res) => {
     console.log("request successful")
     const collection = db.get('ranking');
-    collection.find({}, function(err, result) {
+    collection.find({}, function (err, result) {
         if (err) {
             res.send("Error");
         }
@@ -42,7 +41,7 @@ app.get('/ranking',(req, res) =>{
         }
     });
 })
-app.post('/insertRanking',(req,res)=>{
+app.post('/insertRanking', (req, res) => {
     console.log(req.body);
     let response = req.body;
     console.log(response["nick"]);
@@ -51,10 +50,10 @@ app.post('/insertRanking',(req,res)=>{
     let score = response["score"];
     console.log(response["move"]);
     let move = response["move"];
-    
-    insertData(nick,score,move);
+
+    insertData(nick, score, move);
     res.sendStatus(200);
 })
-app.listen(process.env.PORT, function(){
+app.listen(process.env.PORT, function () {
     console.log(`listening on ${process.env.PORT}`)
 })

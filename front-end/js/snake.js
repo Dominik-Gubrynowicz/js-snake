@@ -16,7 +16,7 @@ function init(){
 Game.active = false;
 function setActive(){
 	Game.active = true;
-	document.getElementById("canvas").setAttribute("style", "visibility: visible;");	
+	document.getElementById("canvas").setAttribute("style", "visibility: visible; display: block;");
 	document.getElementById("id1").setAttribute("style", "visibility: hidden;");
 	document.getElementById("id1").setAttribute("style", "height: 0px;");
 }	
@@ -115,7 +115,11 @@ function endGame() {
 	insertIntoDB(Game.nick, (Game.tailSize - Game.defaultTailSize), Game.moves);
 	document.getElementById("headline").innerText = "Przegrałeś, następna runda rozpocznie się za 5 sekund!"
 	Game.moves = 0;
-	resetGame();
+	document.getElementById("ranking_lost").setAttribute("style", "display: block");
+	setTimeout(function () {
+		resetGame();
+		document.getElementById("ranking_lost").setAttribute("style", "display: none;");
+	} , 5000);
 }
 function resetGame() {
 	snakeX = (snakeY = 10);

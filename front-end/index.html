@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
   <meta charset="UTF-8" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <script src="js/snake.js"></script>
@@ -13,14 +14,15 @@
 </head>
 
 <body>
-  <h1 id="headline" style="font-size: 60px; text-align: center;">Snake</h1>
+  <h1 id="headline">Snake</h1>
   <div id="id1">
-
-  <h4>Wprowadz swój nick</h4>
-  <input id="nick-input" type="text">
-  <input id="przycisk" type="submit">
+    <h3>Twój nick:</h3>
+    <input placeholder="twój nick" id="nick-input" type="text">
+    <input id="przycisk" class="przycisk" type="submit" style="background: red">
+    <button class="przycisk" onclick="window.location.href='./ranking.html'">Ranking</button>
   </div>
   <canvas id="canvas" width="625" height="625"></canvas>
+  <button id="ranking_lost" class="przycisk" onclick="window.location.href='./ranking.html'">Przejdź do rankingu</button>
 <script>
   document.getElementById("przycisk").addEventListener("click",init);
   document.getElementById("canvas").setAttribute("style", "visibility: hidden;");

@@ -44,15 +44,24 @@ app.get('/ranking', (req, res) => {
 app.post('/insertRanking', (req, res) => {
     console.log(req.body);
     let response = req.body;
-    console.log(response["nick"]);
-    let nick = response["nick"];
-    console.log(response["score"]);
-    let score = response["score"];
-    console.log(response["move"]);
-    let move = response["move"];
+    // inversion on >= checks both for number not being below 0 and not being NaN (NaN is not equal, not bigger and not smaller than any number)
+    if (
+        typeof response["nick"] !== "string" ||
+        !(parseInt(response["score"]) >= 0) ||
+        !(parseInt(response["move"]) >= 0)
+    )
+        res.sendStatus(400);
+    else {
+        console.log(response["nick"]);
+        let nick = response["nick"];
+        console.log(response["score"]);
+        let score = parseInt(response["score"]);
+        console.log(response["move"]);
+        let move = parseInt(response["move"]);
 
-    insertData(nick, score, move);
-    res.sendStatus(200);
+        insertData(nick, score, move);
+        res.sendStatus(200);
+    }
 })
 app.listen(process.env.PORT, function () {
     console.log(`listening on ${process.env.PORT}`)

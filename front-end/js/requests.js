@@ -15,22 +15,32 @@ function insertIntoDB(nick, score, moves) {
     })(jQuery);
 }
 function fetchRanking() {
-    class dane {
-        user;
-    }
-    dane.user = `<table id="tabela"><tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr>`;
     $.getJSON('https://node-backend-snakemi16.herokuapp.com/ranking', function (data) {
         console.log(data);
-        data.forEach(element => {
+        const holder = document.getElementById("tabela_holder")
+        holder.innerHTML = ""
+        const table = document.createElement("table")
+        table.id = "tabela"
+        table.innerHTML = "<tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr>"
+        const tableContent = data.map(element => {
             //debug
             console.log(element["nick"])
             console.log(element["score"])
             console.log(element["moves"])
-            dane.user = dane.user + `<tr><td>${element["nick"]}</td><td>${element["score"]}</td><td>${element["moves"]}</td></tr>`
-
+            const tr = document.createElement("tr")
+            const nick = document.createElement("td")
+            nick.innerText = element["nick"]
+            tr.appendChild(nick)
+            const score = document.createElement("td")
+            score.innerText = element["score"]
+            tr.appendChild(score)
+            const moves = document.createElement("td")
+            moves.innerText = element["moves"]
+            tr.appendChild(moves)
+            return tr
         });
-        dane.user = dane.user + `</table>`;
-        document.getElementById("tabela_holder").innerHTML = dane.user;
+        table.appendChild(tableContent)
+        holder.appendChild(table);
     });
 
     setTimeout(function () {

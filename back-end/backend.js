@@ -55,9 +55,9 @@ app.post('/insertRanking', (req, res) => {
         console.log(response["nick"]);
         let nick = response["nick"];
         console.log(response["score"]);
-        let score = response["score"];
+        let score = parseInt(response["score"]);
         console.log(response["move"]);
-        let move = response["move"];
+        let move = parseInt(response["move"]);
 
         insertData(nick, score, move);
         res.sendStatus(200);

@@ -44,8 +44,12 @@ app.get('/ranking', (req, res) => {
 app.post('/insertRanking', (req, res) => {
     console.log(req.body);
     let response = req.body;
-    // investion on >= is checks both for number not being below 0 and not being NaN (NaN is not equal, not bigger and not smaller than any number)
-    if (typeof response["nick"] !== "string" || !(parseInt(response["score"])>=0) || !(parseInt(response["move"])>=0))
+    // inversion on >= checks both for number not being below 0 and not being NaN (NaN is not equal, not bigger and not smaller than any number)
+    if (
+        typeof response["nick"] !== "string" ||
+        !(parseInt(response["score"]) >= 0) ||
+        !(parseInt(response["move"]) >= 0)
+    )
         res.sendStatus(400);
     else {
         console.log(response["nick"]);

@@ -16,29 +16,30 @@ function insertIntoDB(nick, score, moves) {
 }
 function fetchRanking() {
     $.getJSON('https://node-backend-snakemi16.herokuapp.com/ranking', function (data) {
-        console.log(data);
         const holder = document.getElementById("tabela_holder")
         holder.innerHTML = ""
         const table = document.createElement("table")
         table.id = "tabela"
-        table.innerHTML = "<tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr>"
-        const tableContent = data.map(element => {
-            //debug
-            console.log(element["nick"])
-            console.log(element["score"])
-            console.log(element["moves"])
+        table.innerHTML = "<thead><tr><th>Nick</th><th>Wynik</th><th>Ruchy</th></tr></thead>"
+
+        const tableContent = document.createElement("tbody")
+        data.forEach(el => {
             const tr = document.createElement("tr")
             const nick = document.createElement("td")
-            nick.innerText = element["nick"]
+            nick.innerText = el["nick"]
             tr.appendChild(nick)
+
             const score = document.createElement("td")
-            score.innerText = element["score"]
+            score.innerText = el["score"]
             tr.appendChild(score)
+
             const moves = document.createElement("td")
-            moves.innerText = element["moves"]
+            moves.innerText = el["moves"]
             tr.appendChild(moves)
-            return tr
+
+            tableContent.appendChild(tr)
         });
+
         table.appendChild(tableContent)
         holder.appendChild(table);
     });
